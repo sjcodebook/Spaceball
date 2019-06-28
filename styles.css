@@ -1,0 +1,17 @@
+body {
+    background-image: url("space.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#over {
+    display:none;
+    color: red;
+    margin-top: 40px;
+    font-size: 5rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+::-webkit-scrollbar { 
+    display: none; 
+}
