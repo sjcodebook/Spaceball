@@ -10,6 +10,7 @@ $(document).ready(function() {
   let spaceBar = 32;
 
   let spaceshipSpeed = 10;
+  let score = 0;
 
   spaceship.css({
     position: "absolute",
@@ -23,13 +24,13 @@ $(document).ready(function() {
   });
 
   wall.css({
-    position:"absolute",
-    right:40,
+    position: "absolute",
+    right: 40,
     top: 0,
-    width:30,
-    height:120,
-    backgroundColor:"red"
-})
+    width: 30,
+    height: 120,
+    backgroundColor: "red"
+  });
 
   let moveLeft = false;
   let moveRight = false;
@@ -78,11 +79,11 @@ $(document).ready(function() {
 
   function moveWall() {
     if (wall.position().top == 0) {
-      wall.animate({ top: 480 }, 800);
+      wall.animate({ top: 480 }, 1000);
     }
 
     if (wall.position().top == 480) {
-      wall.animate({ top: 0 }, 800);
+      wall.animate({ top: 0 }, 1000);
     }
   }
 
@@ -129,12 +130,39 @@ $(document).ready(function() {
             left: spaceship.position().left + 50 + "px",
             top: spaceship.position().top + 50 + "px"
           })
-          .animate({ left: 2000 }, 1000, function() {
+          .animate({ left: 1500 }, 500, function() {
             bulletState = "available";
           });
       }
+
+      if (
+        bullet.position().top > wall.position().top &&
+        bullet.position().top < (wall.position().top + 120)
+      ) {
+        bulletState = "unavailable";
+        bullet
+          .css({
+            display: "block"
+          })
+          .animate(
+            {
+              left: Math.floor(Math.random() * 30),
+              top: Math.floor(Math.random() * 30)
+            },
+            50,
+            function() {
+              bullet.css({
+                display: "none"
+              });
+              bulletState = "available";
+            }
+          );
+          score++;
+              $("#score").html(score);
+      }
     }
   }
+
   function over() {
     clearInterval(moveRef);
     clearInterval(moveObstacleRef);
@@ -142,7 +170,7 @@ $(document).ready(function() {
       display: "block"
     });
   }
-  var moveRef = setInterval(move, 10);
-  var moveObstacleRef = setInterval(moveWall, 50);
-  setTimeout(over, 10000);
+  var moveRef = setInterval(move, 20);
+  var moveObstacleRef = setInterval(moveWall, 100);
+  setTimeout(over, 200000);
 });
